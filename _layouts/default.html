@@ -19,7 +19,14 @@
       <div class="row">
         <ul class="collection">
           {% for book in site.data.books %}
-          <li class="collection-item">{{ book.BookId }} - {{ book.Title }} - {{ book.Author }}</li>
+          <li class="collection-item avatar">
+            <img src="" class="circle" />
+            <span class="title">{{ book.Title }}</span>
+            <p>
+              by : {{ book.Author }}
+            </p>
+            <a href="https://www.goodreads.com/book/show/{{ book.BookId }}.{{ book.Title | replace:' ','-'}}">goodReads</a>
+          </li>
           {% endfor %}
         </ul>
       </div>
