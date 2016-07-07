@@ -4,17 +4,37 @@
   {% include head.html %}
 
   <body>
+      <div class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Ghoomakkad Library</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">Infinity</a></li>
+            <li><a href="badges.html">Mindgrep</a></li>
+          </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="container">
+      <div class="row">
+        <ul class="collection">
+          {% for book in site.data.books %}
+          <li class="collection-item">{{ book.BookId }} - {{ book.Title }} - {{ book.Author }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-    {% include header.html %}
 
-    <div class="page-content">
+    <div class="">
       <div class="wrapper">
         {{ content }}
       </div>
     </div>
 
     {% include footer.html %}
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
   </body>
 
 </html>
