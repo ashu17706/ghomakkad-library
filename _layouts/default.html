@@ -16,32 +16,65 @@
         </nav>
       </div>
       <div class="container">
-      <div class="row">
-        <ul class="collection">
-          {% for book in site.data.books %}
-          <li class="collection-item avatar">
-            <img src="" class="circle" />
-            <span class="title">{{ book.Title }}</span>
-            <p>
-              by : {{ book.Author }}
-            </p>
-            <a href="https://www.goodreads.com/book/show/{{ book.BookId }}.{{ book.Title | replace:' ','-'}}">goodReads</a>
-          </li>
-          {% endfor %}
+        <div class="row">
+          {% assign books = site.data.books %}
+          {% assign books_authors = site.data.books | group_by:"Author" | sort: 'name' , 'last' %}
+
+          <ul class="collapsible popout" data-collapsible="accordion">
+            {% for group in books_authors %}
+              <li>
+                <div class="collapsible-header">
+                  <i class="material-icons">person_pin</i>
+                  <span>
+                    {{ group.name }}
+                    <span class="chip right" style="margin-top: 6px">
+                      {% case group.items.size %}
+                      {% when 1 %}
+                        {{ group.items.size }} book
+                      {% else %}
+                        {{ group.items.size }} books
+                      {% endcase %}
+                    </span>
+
+                  </span>
+                </div>
+                <div class="collapsible-body">
+                  {% assign items = group.items %}
+                    <ul class="collection">
+                    {% for item in items %}
+                      <li class="collection-item">
+                        <div>{{ forloop.index }}. {{ item.Title }}
+                          <a class="secondary-content" href="https://www.goodreads.com/book/show/{{ item.BookId }}.{{ item.Title | replace:' ','-'}}">good reads link</a>
+                        </div>
+                      </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+              </li>
+            {% endfor %}
+            {% assign books = books | sort: 'Title', 'last'%}
+          {% for book in books %}
         </ul>
+          <div class="row">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-content">
+                  <span class="card-title flow-text">{{ book.Title }}</span>
+                  <blockquote>
+                    by {{ book.Author }}
+                  </blockquote>
+                </div>
+                <div class="card-action">
+                  <a href="https://www.goodreads.com/book/show/{{ book.BookId }}.{{ book.Title | replace:' ','-'}}">good reads link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
       </div>
-    </div>
-
-
-    <div class="">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </div>
-
-    {% include footer.html %}
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
   </body>
-
 </html>
